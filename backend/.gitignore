@@ -4,3 +4,4 @@ __pycache_
 .cache
 htmlcov
 .coverage
+*.pyc
