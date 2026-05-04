@@ -1,0 +1,6 @@
+__pycache_
+.mypy_cache
+.venv
+.cache
+htmlcov
+.coverage
