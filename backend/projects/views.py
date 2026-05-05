@@ -2,8 +2,11 @@ from backend.projects.models import Project
 from backend.projects.serializers import ProjectSerializer
 from rest_framework import permissions
 from backend.projects.permissions import IsOwnerOrReadOnly
-from rest_framework.response import Response
 from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from backend.projects.models import ProjectLog
+from backend.projects.serializers import ProjectLogSerializer
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
@@ -16,8 +19,24 @@ class ProjectViewSet(viewsets.ModelViewSet):
     serializer_class = ProjectSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
+    @action(detail=True, methods=["get"], url_path="logs", url_name="logs")
+    def logs(self, request, pk=None):
+        project = self.get_object()
+        logs = project.logs.all()
+        page = self.paginate_queryset(logs)
+        if page is not None:
+            return self.get_paginated_response(
+                ProjectLogSerializer(page, many=True).data
+            )
+        return Response(ProjectLogSerializer(logs, many=True).data)
+
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class ProjectLogList(viewsets.ReadOnlyModelViewSet):
+    queryset = ProjectLog.objects.all()  # type: ignore
+    serializer_class = ProjectLogSerializer
 
 
 from django.contrib.auth.models import User
@@ -31,18 +50,3 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 
     queryset = User.objects.all()
     serializer_class = UserSerializer
-
-
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.reverse import reverse
-
-
-@api_view(["GET"])
-def api_root(request, format=None):
-    return Response(
-        {
-            "users": reverse("user-list", request=request, format=format),
-            "projects": reverse("project-list", request=request, format=format),
-        }
-    )

@@ -20,3 +20,14 @@ class Project(models.Model):
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name="projects", on_delete=models.CASCADE
     )
+
+
+class ProjectLog(models.Model):
+    field = models.CharField(max_length=30, blank=False, default="")
+    old_value = models.TextField(blank=True, null=True)
+    new_value = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="logs")
+
+    class Meta:
+        ordering = ['-created_at']
