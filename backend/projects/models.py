@@ -21,6 +21,35 @@ class Project(models.Model):
         settings.AUTH_USER_MODEL, related_name="projects", on_delete=models.CASCADE
     )
 
+    EXCLUDE_FIELDS = ["id", "created_at", "updated_at", "owner"]
+
+    def save(self, *args, **kwargs):
+        """
+        Override save method to save logs.
+        """
+
+        if self.pk:
+            old = Project.objects.get(pk=self.pk)  # type: ignore
+            for field in self._meta.get_fields():  # type: ignore
+                if field.is_relation:
+                    continue
+                field_name = field.name
+                if field_name in self.EXCLUDE_FIELDS:
+                    continue
+
+                old_val = getattr(old, field_name)
+                new_val = getattr(self, field_name)
+
+                if old_val != new_val:
+                    ProjectLog.objects.create(  # type: ignore
+                        project=self,
+                        field=field_name,
+                        old_value=str(old_val),
+                        new_value=str(new_val),
+                    )
+
+        super().save(*args, **kwargs)
+
 
 class ProjectLog(models.Model):
     field = models.CharField(max_length=30, blank=False, default="")
@@ -30,4 +59,4 @@ class ProjectLog(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="logs")
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ["-created_at"]

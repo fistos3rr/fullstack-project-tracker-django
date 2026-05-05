@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from backend.projects.models import Project
+from backend.projects.models import Project, ProjectStatus
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -16,6 +16,17 @@ class ProjectSerializer(serializers.ModelSerializer):
             "updated_at",
             "owner",
         ]
+
+    def validate(self, attrs):
+        if self.instance:
+            project_status = self.instance.status
+
+            if project_status == ProjectStatus.COMPLETED:
+                raise serializers.ValidationError(
+                    {"status": "Project cannot be changed. It has been completed."}
+                )
+
+        return attrs
 
 
 from django.contrib.auth.models import User

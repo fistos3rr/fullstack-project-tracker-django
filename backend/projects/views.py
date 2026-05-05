@@ -14,7 +14,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     This ViewSet automatically provides `list`, `create`, `retrieve`,
     `update` and `destroy` actions.
     """
-
+    
     queryset = Project.objects.all()  # type: ignore
     serializer_class = ProjectSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
