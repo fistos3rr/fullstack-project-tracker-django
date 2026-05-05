@@ -4,9 +4,9 @@ from django.conf import settings
 
 
 class ProjectStatus(models.TextChoices):
-    PLANNED = "PLANNED", _("Planned")  # type: ignore
-    ACTIVE = "ACTIVE", _("Active")  # type: ignore
-    COMPLETED = "COMPLETED", _("Completed")  # type: ignore
+    PLANNED = "PLANNED", _("Planned")  
+    ACTIVE = "ACTIVE", _("Active")   
+    COMPLETED = "COMPLETED", _("Completed")  
 
 
 class Project(models.Model):
@@ -29,8 +29,8 @@ class Project(models.Model):
         """
 
         if self.pk:
-            old = Project.objects.get(pk=self.pk)  # type: ignore
-            for field in self._meta.get_fields():  # type: ignore
+            old = Project.objects.get(pk=self.pk)   
+            for field in self._meta.get_fields():  
                 if field.is_relation:
                     continue
                 field_name = field.name
@@ -41,7 +41,7 @@ class Project(models.Model):
                 new_val = getattr(self, field_name)
 
                 if old_val != new_val:
-                    ProjectLog.objects.create(  # type: ignore
+                    ProjectLog.objects.create(  
                         project=self,
                         field=field_name,
                         old_value=str(old_val),

@@ -15,7 +15,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     `update` and `destroy` actions.
     """
 
-    queryset = Project.objects.all()  # type: ignore
+    queryset = Project.objects.all()  
     serializer_class = ProjectSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
