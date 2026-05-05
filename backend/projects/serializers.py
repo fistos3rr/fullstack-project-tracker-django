@@ -52,3 +52,15 @@ class ProjectLogSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProjectLog
         fields = ["id", "field", "old_value", "new_value", "created_at", "project"]
+
+
+from backend.projects.models import ProjectComment
+
+
+class ProjectCommentSerializer(serializers.ModelSerializer):
+    project = serializers.PrimaryKeyRelatedField(read_only=True)
+    owner = serializers.PrimaryKeyRelatedField(read_only=True) 
+
+    class Meta:
+        model = ProjectComment
+        fields = ["id", "content", "created_at", "project", "owner"]

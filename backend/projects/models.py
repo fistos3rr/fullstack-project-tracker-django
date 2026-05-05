@@ -60,3 +60,17 @@ class ProjectLog(models.Model):
 
     class Meta:
         ordering = ["-created_at"]
+
+
+class ProjectComment(models.Model):
+    content = models.TextField(blank=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    project = models.ForeignKey(
+        Project, on_delete=models.CASCADE, related_name="comments"
+    )
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name="comments", on_delete=models.CASCADE
+    )
+
+    class Meta:
+        ordering = ["-created_at"]
