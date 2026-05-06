@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from backend.projects.models import Project, ProjectStatus
+from backend.projects.models import Project, ProjectStatus, ProjectComment
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -37,10 +37,14 @@ class UserSerializer(serializers.ModelSerializer):
         many=True,
         queryset=Project.objects.all(),  
     )
+    comments = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=ProjectComment.objects.all(),
+    )
 
     class Meta:
         model = User
-        fields = ["id", "username", "projects"]
+        fields = ["id", "username", "projects", "comments"]
 
 
 from backend.projects.models import ProjectLog
@@ -59,7 +63,7 @@ from backend.projects.models import ProjectComment
 
 class ProjectCommentSerializer(serializers.ModelSerializer):
     project = serializers.PrimaryKeyRelatedField(read_only=True)
-    owner = serializers.PrimaryKeyRelatedField(read_only=True) 
+    owner = serializers.ReadOnlyField(source="owner.username") 
 
     class Meta:
         model = ProjectComment
