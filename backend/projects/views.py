@@ -50,6 +50,8 @@ class ProjectCommentViewSet(viewsets.ModelViewSet):
     """
     Projects comments viewset for creating and destroying comments.
     """
+
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     serializer_class = ProjectCommentSerializer
 
     def get_queryset(self):
