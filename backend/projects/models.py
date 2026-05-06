@@ -22,6 +22,9 @@ class Project(models.Model):
         settings.AUTH_USER_MODEL, related_name="projects", on_delete=models.CASCADE
     )
 
+    class Meta:
+        ordering = ["-updated_at"]
+
     EXCLUDE_FIELDS = ["id", "created_at", "updated_at", "owner"]
 
     def save(self, *args, **kwargs):
