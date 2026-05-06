@@ -35,7 +35,7 @@ from django.contrib.auth.models import User
 class UserSerializer(serializers.ModelSerializer):
     projects = serializers.PrimaryKeyRelatedField(
         many=True,
-        querysee=Project.objects.all(),  
+        queryset=Project.objects.all(),  
     )
 
     class Meta:
