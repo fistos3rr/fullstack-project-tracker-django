@@ -10,6 +10,7 @@ class ProjectStatus(models.TextChoices):
 
 
 class Project(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30, blank=False, default="")
     description = models.TextField()
     status = models.CharField(
@@ -52,6 +53,7 @@ class Project(models.Model):
 
 
 class ProjectLog(models.Model):
+    id = models.AutoField(primary_key=True)
     field = models.CharField(max_length=30, blank=False, default="")
     old_value = models.TextField(blank=True, null=True)
     new_value = models.TextField()
@@ -63,6 +65,7 @@ class ProjectLog(models.Model):
 
 
 class ProjectComment(models.Model):
+    id = models.AutoField(primary_key=True)
     content = models.TextField(blank=False)
     created_at = models.DateTimeField(auto_now_add=True)
     project = models.ForeignKey(
