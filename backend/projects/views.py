@@ -31,17 +31,6 @@ class ProjectViewSet(viewsets.ModelViewSet):
             )
         return Response(ProjectLogSerializer(logs, many=True).data)
 
-   # @action(detail=True, methods=["get"], url_path="comments", url_name="comments")
-   # def comments(self, request, pk=None):
-   #     project = self.get_object()
-   #     comments = project.comments.all()
-   #     page = self.paginate_queryset(comments)
-   #     if page is not None:
-   #         return self.get_paginated_response(
-   #             ProjectCommentSerializer(page, many=True).data
-   #         )
-   #     return Response(ProjectCommentSerializer(comments, many=True).data)
-
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
@@ -67,12 +56,6 @@ class ProjectCommentViewSet(viewsets.ModelViewSet):
         except Project.DoesNotExist:
             raise NotFound("Project not found")
         serializer.save(project=project, owner=self.request.user)
-
-    def perform_destroy(self, instance):
-        project_id = self.kwargs.get('project_pk')
-        if instance.project_id != project_id:
-            raise NotFound("Comment does not belong to this project")
-        instance.delete()
 
 
 from django.contrib.auth.models import User
