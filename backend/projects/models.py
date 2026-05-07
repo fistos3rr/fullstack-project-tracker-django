@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.conf import settings
+from django.db import transaction
 
 
 class ProjectStatus(models.TextChoices):
@@ -27,6 +28,7 @@ class Project(models.Model):
 
     EXCLUDE_FIELDS = ["id", "created_at", "updated_at", "owner"]
 
+    @transaction.atomic
     def save(self, *args, **kwargs):
         """
         Override save method to save logs.
