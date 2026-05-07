@@ -21,7 +21,7 @@ class TestProjectViewSet:
 
     def test_unauthenticated_cannot_create_project(self, api_client, project_data):
         response = api_client.post(self.list_url, project_data, format="json")
-        assert response.status_code == status.HTTP_403_FORBIDDEN
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
         assert Project.objects.count() == 0
 
     def test_authenticated_can_create_project(self, owner_client, project_data):
@@ -42,7 +42,7 @@ class TestProjectViewSet:
     def test_unauthenticated_cannot_edit_project(self, api_client, detail_url):
         assert Project.objects.count() == 1
         response = api_client.delete(detail_url)
-        assert response.status_code == status.HTTP_403_FORBIDDEN
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
         assert Project.objects.count() == 1
 
     def test_other_cannot_edit_project(

@@ -42,7 +42,7 @@ class TestProjectCommentViewSet:
     ):
         response = api_client.post(list_url, comment_data, format="json")
 
-        assert response.status_code == status.HTTP_403_FORBIDDEN
+        assert response.status_code == status.HTTP_401_UNAUTHORIZED
         assert ProjectComment.objects.count() == 0
 
     def test_authenticated_can_create_comment(

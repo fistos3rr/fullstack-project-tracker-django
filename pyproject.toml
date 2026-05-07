@@ -8,6 +8,7 @@ dependencies = [
     "django-cors-headers>=4.9.0",
     "django-stubs>=6.0.3",
     "djangorestframework>=3.17.1",
+    "djangorestframework-simplejwt>=5.5.1",
     "drf-nested-routers>=0.95.0",
     "pygments>=2.20.0",
 ]

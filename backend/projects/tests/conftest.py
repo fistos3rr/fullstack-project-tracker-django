@@ -1,3 +1,4 @@
+from rest_framework_simplejwt.tokens import RefreshToken
 import pytest
 from django.contrib.auth.models import User
 from backend.projects.models import ProjectStatus, Project
@@ -26,13 +27,17 @@ def other():
 
 @pytest.fixture
 def owner_client(api_client, owner):
-    api_client.force_authenticate(user=owner)
+    refresh = RefreshToken.for_user(owner)
+    access_token = str(refresh.access_token)
+    api_client.credentials(HTTP_AUTHORIZATION=f'Bearer {access_token}')
     return api_client
 
 
 @pytest.fixture
 def other_client(api_client, other):
-    api_client.force_authenticate(user=other)
+    refresh = RefreshToken.for_user(other)
+    access_token = str(refresh.access_token)
+    api_client.credentials(HTTP_AUTHORIZATION=f'Bearer {access_token}')
     return api_client
 
 
