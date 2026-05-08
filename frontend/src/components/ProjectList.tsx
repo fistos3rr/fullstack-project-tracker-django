@@ -34,24 +34,26 @@ export const ProjectList: React.FC = () => {
 
   return (
     <div>
-      <ul>
-        {projects.map(project => (
-          <li key = {project.id}>
-            <strong>{project.name}</strong><br />
-            Status: {project.status}<br />
-            Description: {project.description}<br />
-          </li>
-        ))}
-      </ul>
-    </div>
-    <div>
-      <button disabled={currentPage === 1} onClick={() => loadPage((currentPage - 1))}>
-        Prev
-      </button>
-      <span>Page {currentPage}/{totalPages}</span>
-      <button disabled={currentPage === totalPages} onClick={() => loadPage(currentPage + 1)}>
-        Next
-      </button>
+      <div>
+        <ul>
+          {projects.map(project => (
+            <li key = {project.id}>
+              <strong>{project.name}</strong><br />
+              Status: {project.status}<br />
+              Description: {project.description}<br />
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <button disabled={currentPage === 1} onClick={() => loadPage((currentPage - 1))}>
+          Prev
+        </button>
+        <span>Page {currentPage}/{totalPages}</span>
+        <button disabled={currentPage === totalPages} onClick={() => loadPage(currentPage + 1)}>
+          Next
+        </button>
+      </div>
     </div>
   );
 };

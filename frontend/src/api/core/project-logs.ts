@@ -11,7 +11,7 @@ export const fetchProjectLogPage = async (
 ): Promise<PaginatedResponse<ProjectLog>> => {
   const response = await
     axiosInstance.get<PaginatedResponse<ProjectLog>>(
-      `/projects/${projectId}/logs/`,
+      `/projects/${projectId}/logs`,
       { params: { page, page_size: pageSize } });
   return response.data;
 };

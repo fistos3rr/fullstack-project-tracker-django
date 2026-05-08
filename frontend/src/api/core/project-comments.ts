@@ -4,12 +4,12 @@ import { PaginatedResponse } from "../models/pagination";
 
 
 const getCommentsUrl = (projectId: number) => 
-  `/projects/${projectId}/comments/`;
+  `/projects/${projectId}/comments`;
 
 const getCommentUrl = (
   projectId: number, 
   commentId: number
-) => `/projects/${projectId}/comments/${commentId}`;
+) => `/projects/${projectId}/comments${commentId}`;
 
 
 // GET list pagination
