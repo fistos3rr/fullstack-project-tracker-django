@@ -1,5 +1,5 @@
 from backend.projects.models import Project
-from backend.projects.serializers import ProjectSerializer
+from backend.projects.serializers import ProjectSerializer 
 from rest_framework import permissions
 from backend.projects.permissions import IsOwnerOrReadOnly
 from rest_framework import viewsets, mixins
@@ -59,7 +59,7 @@ class ProjectCommentViewSet(viewsets.ModelViewSet):
 
 
 from django.contrib.auth.models import User
-from backend.projects.serializers import UserSerializer
+from backend.projects.serializers import UserListSerializer, UserDetailSerializer
 
 
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
@@ -68,4 +68,10 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
 
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return UserListSerializer
+        if self.action == 'retrieve':
+            return UserDetailSerializer
+        return UserDetailSerializer

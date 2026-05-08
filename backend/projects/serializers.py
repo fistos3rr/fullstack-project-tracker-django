@@ -31,8 +31,12 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 from django.contrib.auth.models import User
 
+class UserListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "username", "email"] 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserDetailSerializer(serializers.ModelSerializer):
     projects = serializers.PrimaryKeyRelatedField(
         many=True,
         queryset=Project.objects.all(),  
@@ -44,7 +48,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["id", "username", "projects", "comments"]
+        fields = ["id", "username", "email", "projects", "comments"]
 
 
 from backend.projects.models import ProjectLog
