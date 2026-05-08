@@ -1,4 +1,4 @@
-import axiosInstance from "../axiosInstance";
+import apiClient from "../client";
 import { ProjectLog } from "../models/projectLog";
 import { PaginatedResponse } from "../models/pagination";
 
@@ -10,7 +10,7 @@ export const fetchProjectLogPage = async (
   pageSize = 10
 ): Promise<PaginatedResponse<ProjectLog>> => {
   const response = await
-    axiosInstance.get<PaginatedResponse<ProjectLog>>(
+    apiClient.get<PaginatedResponse<ProjectLog>>(
       `/projects/${projectId}/logs`,
       { params: { page, page_size: pageSize } });
   return response.data;

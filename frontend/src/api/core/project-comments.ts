@@ -1,4 +1,4 @@
-import axiosInstance from "../axiosInstance";
+import apiClient from "../client";
 import { ProjectComment, ProjectCommentCreate } from "../models/projectComment";
 import { PaginatedResponse } from "../models/pagination";
 
@@ -19,7 +19,7 @@ export const fetchProjectCommentPage = async (
   pageSize = 10
 ): Promise<PaginatedResponse<ProjectComment>> => {
   const response = 
-    await axiosInstance
+    await apiClient
       .get<PaginatedResponse<ProjectComment>>(getCommentsUrl(projectId), {
     params: { page, page_size: pageSize },
   });
@@ -33,7 +33,7 @@ export const fetchProjectComment = async (
   commentId: number
 ): Promise<ProjectComment> => {
   const response = await 
-    axiosInstance.get<ProjectComment>(getCommentUrl(projectId, commentId));
+    apiClient.get<ProjectComment>(getCommentUrl(projectId, commentId));
   return response.data;
 };
 
@@ -42,7 +42,7 @@ export const fetchProjectComment = async (
 export const createProjectComment = async (
   projectId: number, data: ProjectCommentCreate
 ): Promise<ProjectComment> => {
-  const response = await axiosInstance
+  const response = await apiClient
     .post<ProjectComment>(getCommentsUrl(projectId), data);
   return response.data;
 };
@@ -53,5 +53,5 @@ export const deleteProjectComment = async (
   projectId: number,
   commentId: number
 ): Promise<void> => {
-  await axiosInstance.delete(getCommentUrl(projectId, commentId));
+  await apiClient.delete(getCommentUrl(projectId, commentId));
 }
