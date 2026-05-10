@@ -1,4 +1,5 @@
 import { ProjectStatus } from "../../api/models/projectStatus";
+import { getDateTime } from "../../utils";
 
 
 export interface ProjectCardProps {
@@ -24,10 +25,10 @@ export const ProjectCard = ({
       <div className="p-4">
         <h3 className="font-medium text-gray-900 line-clamp-1">{name}</h3>
         <div className="flex items-center gap-1 mt-1">
-          <span className="text-sm text-gray-600">{status}</span>
+          <span className="text-sm font-bold text-gray-900">{status}</span>
         </div>
         <div className="mt-2">
-          <span className="text-xl font-bold text-gray-900">{updated_at}</span>
+          <span className="text-sm text-gray-600">{getDateTime(updated_at)}</span>
         </div>
       </div>
     </div>
