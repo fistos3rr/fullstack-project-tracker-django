@@ -1,15 +1,7 @@
 import apiClient from "../client";
 import { ProjectComment, ProjectCommentCreate } from "../models/projectComment";
 import { PaginatedResponse } from "../models/pagination";
-
-
-const getCommentsUrl = (projectId: number) => 
-  `/projects/${projectId}/comments`;
-
-const getCommentUrl = (
-  projectId: number, 
-  commentId: number
-) => `/projects/${projectId}/comments${commentId}`;
+import { API_PATHS } from "../../config/api";
 
 
 // GET list pagination
@@ -20,7 +12,7 @@ export const fetchProjectCommentPage = async (
 ): Promise<PaginatedResponse<ProjectComment>> => {
   const response = 
     await apiClient
-      .get<PaginatedResponse<ProjectComment>>(getCommentsUrl(projectId), {
+      .get<PaginatedResponse<ProjectComment>>(API_PATHS.COMMENTS.BASE(projectId), {
     params: { page, page_size: pageSize },
   });
   return response.data;
@@ -33,7 +25,7 @@ export const fetchProjectComment = async (
   commentId: number
 ): Promise<ProjectComment> => {
   const response = await 
-    apiClient.get<ProjectComment>(getCommentUrl(projectId, commentId));
+    apiClient.get<ProjectComment>(API_PATHS.COMMENTS.BY_ID(projectId, commentId));
   return response.data;
 };
 
@@ -43,7 +35,7 @@ export const createProjectComment = async (
   projectId: number, data: ProjectCommentCreate
 ): Promise<ProjectComment> => {
   const response = await apiClient
-    .post<ProjectComment>(getCommentsUrl(projectId), data);
+    .post<ProjectComment>(API_PATHS.COMMENTS.BASE(projectId), data);
   return response.data;
 };
 
@@ -53,5 +45,5 @@ export const deleteProjectComment = async (
   projectId: number,
   commentId: number
 ): Promise<void> => {
-  await apiClient.delete(getCommentUrl(projectId, commentId));
+  await apiClient.delete(API_PATHS.COMMENTS.BY_ID(projectId, commentId));
 }

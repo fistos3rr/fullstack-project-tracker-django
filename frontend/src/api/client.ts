@@ -1,11 +1,9 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
+import { BACKEND_URL, API_BASE_URL } from "../config/env";
 
-
-//const baseURL = `http://${import.meta.env.DOMAIN_NAME}:${import.meta.env.BACKEND_PORT}/api`;
-const baseURL = 'http://localhost:8000/api'
 
 const apiClient = axios.create({
-  baseURL,
+  baseURL: `${BACKEND_URL}${API_BASE_URL}`,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -37,7 +35,7 @@ apiClient.interceptors.response.use(
         if (!refreshToken) throw new Error("Refresh token not found!");
 
         const response = await 
-          axios.post("/api/auth/refresh", { refreshToken });
+          axios.post("/auth/refresh", { refreshToken });
         const { access_token, refresh_token } = response.data;
 
         localStorage.setItem("access_token", access_token);

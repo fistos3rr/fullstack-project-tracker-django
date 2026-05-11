@@ -1,6 +1,7 @@
 import apiClient from "../client";
 import { ProjectLog } from "../models/projectLog";
 import { PaginatedResponse } from "../models/pagination";
+import { API_PATHS } from "../../config/api";
 
 
 // GET page
@@ -11,7 +12,7 @@ export const fetchProjectLogPage = async (
 ): Promise<PaginatedResponse<ProjectLog>> => {
   const response = await
     apiClient.get<PaginatedResponse<ProjectLog>>(
-      `/projects/${projectId}/logs`,
+      API_PATHS.LOGS.BASE(projectId),
       { params: { page, page_size: pageSize } });
   return response.data;
 };
