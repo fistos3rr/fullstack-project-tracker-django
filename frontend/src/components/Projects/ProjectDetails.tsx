@@ -44,15 +44,16 @@ export const ProjectDetails = ({
       .finally(() => setLoading(false));
   }, [id]); 
 
+  if (loading) return <Loading />;
+
   if (!project) return <h1>no project</h1>;
 
   const status = statusConfig[project?.status];
   const created_at = getDateTime(project?.created_at);
   const updated_at = getDateTime(project?.updated_at);
-  
+
   if (error) return <div>Error: {error}</div>;
 
-  if (loading) return <Loading />;
 
   return (
     <>
