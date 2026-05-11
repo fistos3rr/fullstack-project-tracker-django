@@ -1,22 +1,8 @@
-import { ProjectList } from './components/Projects/ProjectList'
-import { Button } from './components/ui/Button'
-import Header from './components/Common/Header'
-import MainContent from './components/Common/MainContent'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './routes/router'
 
 function App() {
-  return (
-    <>
-    <div className='flex flex-col min-h-screen'>
-      <Header
-        logoSrc='/logo.jpg'
-      />
-      <MainContent>
-        <Button size='xs' variant='gradient'>New Project</Button>
-        <ProjectList />
-      </MainContent>
-    </div>
-    </>
-  );
+  return <RouterProvider router={router} />;
 };
 
 export default App
