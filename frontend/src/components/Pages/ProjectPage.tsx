@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { ProjectDetails } from "../Projects/ProjectDetails";
 import { ProjectCommentList } from "../Comments/ProjectCommentList";
+import { ProjectLogList } from "../Logs/ProjectLogList";
 
 
 export const ProjectPage = () => {
@@ -19,6 +20,7 @@ export const ProjectPage = () => {
     <div className='project'>
       <ProjectDetails id={projectId} />
       <ProjectCommentList projectId={projectId} />
+      <ProjectLogList projectId={projectId} />
     </div>
   );
 };
