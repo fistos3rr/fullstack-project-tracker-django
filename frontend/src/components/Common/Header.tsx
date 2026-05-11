@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { ROUTES } from '../../config/routes';
 
 interface HeaderProps {
   logoSrc?: string;
@@ -31,7 +32,7 @@ const Header: React.FC<HeaderProps> = ({
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-center md:justify-start h-16 md:h-20">
-          <a href="/" className="flex items-center space-x-3 group">
+          <a href={ROUTES.HOME} className="flex items-center space-x-3 group">
             {logoSrc ? (
               <img
                 src={logoSrc}

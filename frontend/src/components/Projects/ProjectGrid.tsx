@@ -1,6 +1,8 @@
 import { ProjectCard } from "./ProjectCard";
 import type { Project } from "../../api/models/project";
 import { Loading } from "../ui/Loading";
+import { Link } from "react-router-dom";
+import { ROUTES } from "../../config/routes";
 
 interface ProjectGridProps {
   projects: Project[];
@@ -36,13 +38,15 @@ export const ProjectGrid = ({
   return (
     <div className={`grid gap-6 ${gridCols[columns]}`}>
       {projects.map((project) => (
-        <ProjectCard
-          id={project.id}
-          name={project.name}
-          status={project.status}
-          updated_at={project.updated_at}
-          onCardClick={() => onProjectClick?.(project)}
-        />
+        <Link to={ROUTES.PROJECT_DETAIL(project.id)}>
+          <ProjectCard
+            id={project.id}
+            name={project.name}
+            status={project.status}
+            updated_at={project.updated_at}
+            onCardClick={() => onProjectClick?.(project)}
+          />
+        </Link>
       ))} 
     </div>
   )
