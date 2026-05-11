@@ -1,6 +1,6 @@
 import { ProjectCard } from "./ProjectCard";
 import type { Project } from "../../api/models/project";
-import { ProjectCardSkeleton } from "./ProjectCardSkeleton";
+import { Loading } from "../ui/Loading";
 
 interface ProjectGridProps {
   projects: Project[];
@@ -22,13 +22,7 @@ export const ProjectGrid = ({
   };
 
   if (isLoading) {
-    return (
-      <div className={`grid gap-6 ${gridCols[columns]}`}>
-        {[...Array(8)].map((_, i) => (
-          <ProjectCardSkeleton key={i} />
-        ))} 
-      </div>
-    );
+    return <Loading />
   }
 
   if (projects.length === 0) {

@@ -6,7 +6,9 @@ export const ProjectPage = () => {
   return (
     <div className='project-page'>
       <Button size='xs' variant='gradient'>New Project</Button>
-      <ProjectList />
+      <div className="min-h-[300px]">
+        <ProjectList />
+      </div>
     </div>
   );
 };

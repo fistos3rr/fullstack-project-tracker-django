@@ -36,7 +36,7 @@ const Header: React.FC<HeaderProps> = ({
               <img
                 src={logoSrc}
                 alt={logoAlt}
-                className="h-12 w-auto transition-transform group-hover:scale-105 rounded-lg"
+                className="h-12 w-12 transition-transform group-hover:scale-105 rounded-lg"
               />
             ) : (
               <div className="h-8 w-8 bg-gradient-to-br from-purple-500 to-blue-500 rounded-lg rotate-6 group-hover:rotate-12 transition-transform" />
