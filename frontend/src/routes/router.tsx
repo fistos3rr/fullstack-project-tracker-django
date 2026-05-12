@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate } from 'react-router-dom';
+import { createBrowserRouter, Navigate, redirect } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { ROUTES } from '../config/routes';
 import { MainLayout } from '../components/MainLayout';
@@ -16,15 +16,26 @@ const withSuspense = (Component: React.LazyExoticComponent<React.ComponentType<a
   </Suspense>
 )
 
+const protectedLoader = () => {
+  const token = localStorage.getItem('access_token');
+  if (!token) {
+    return redirect(ROUTES.LOGIN);
+  }
+  return null;
+};
 
 export const router = createBrowserRouter([
   {
     element: <MainLayout />,
     children: [
-      { path: "/", element: <Navigate to={ROUTES.HOME}/>},
+      { path: "/", element: <Navigate to={ROUTES.HOME}/> },
       { path: ROUTES.PROJECTS, element: withSuspense(ProjectListPage) },
-      { path: ROUTES.PROJECT_DETAIL(), element: withSuspense(ProjectPage)},
-      { path: ROUTES.PROJECT_CREATE, element: withSuspense(ProjectCreatePage)},
+      { path: ROUTES.PROJECT_DETAIL(), element: withSuspense(ProjectPage) },
+      { 
+        path: ROUTES.PROJECT_CREATE, 
+        element: withSuspense(ProjectCreatePage),
+        loader: protectedLoader,
+      },
     ]
   }
 ])
