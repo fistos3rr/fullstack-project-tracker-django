@@ -1,14 +1,27 @@
 export const API_PATHS = {
   PROJECTS: {
     BASE: '/projects',
-    BY_ID: (id: number) => `/projects/${id}`,
-    POST: '/projects/',
-  },
-  COMMENTS: {
-    BASE: (project_id: number) => `/projects/${project_id}/comments`,
-    BY_ID: (project_id: number, id: number) => `/projects/${project_id}/comments/${id}`,
-  },
-  LOGS: {
-    BASE: (project_id: number) => `/projects/${project_id}/logs`
+    get BY_ID() { return ((id: number) => `${this.BASE}/${id}`) },
+    get POST() { return `${this.BASE}/` }, 
+
+    get COMMENTS() {
+      return (project_id: number) => {
+        const baseComment = `${this.BY_ID(project_id)}/comments`;
+        return {
+          BASE: baseComment,
+          BY_ID: (id: number) => `${baseComment}/${id}`,
+          POST: `${baseComment}/`
+        }
+      }
+    },
+
+    get LOGS() {
+      return (project_id: number) =>{
+        const baseLog = `${this.BY_ID(project_id)}/logs`
+        return {
+          BASE: baseLog,
+        }
+      }
+    }
   }
 }

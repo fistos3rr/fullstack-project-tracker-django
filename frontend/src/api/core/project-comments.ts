@@ -12,7 +12,7 @@ export const fetchProjectCommentPage = async (
 ): Promise<PaginatedResponse<ProjectComment>> => {
   const response = 
     await apiClient
-      .get<PaginatedResponse<ProjectComment>>(API_PATHS.COMMENTS.BASE(projectId), {
+      .get<PaginatedResponse<ProjectComment>>(API_PATHS.PROJECTS.COMMENTS(projectId).BASE, {
     params: { page, page_size: pageSize },
   });
   return response.data;
@@ -25,7 +25,7 @@ export const fetchProjectComment = async (
   commentId: number
 ): Promise<ProjectComment> => {
   const response = await 
-    apiClient.get<ProjectComment>(API_PATHS.COMMENTS.BY_ID(projectId, commentId));
+    apiClient.get<ProjectComment>(API_PATHS.PROJECTS.COMMENTS(projectId).BY_ID(commentId));
   return response.data;
 };
 
@@ -35,7 +35,7 @@ export const createProjectComment = async (
   projectId: number, data: ProjectCommentCreate
 ): Promise<ProjectComment> => {
   const response = await apiClient
-    .post<ProjectComment>(API_PATHS.COMMENTS.BASE(projectId), data);
+    .post<ProjectComment>(API_PATHS.PROJECTS.COMMENTS(projectId).BASE, data);
   return response.data;
 };
 
@@ -45,5 +45,5 @@ export const deleteProjectComment = async (
   projectId: number,
   commentId: number
 ): Promise<void> => {
-  await apiClient.delete(API_PATHS.COMMENTS.BY_ID(projectId, commentId));
+  await apiClient.delete(API_PATHS.PROJECTS.COMMENTS(projectId).BY_ID(commentId));
 }

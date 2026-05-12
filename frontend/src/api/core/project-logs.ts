@@ -12,7 +12,7 @@ export const fetchProjectLogPage = async (
 ): Promise<PaginatedResponse<ProjectLog>> => {
   const response = await
     apiClient.get<PaginatedResponse<ProjectLog>>(
-      API_PATHS.LOGS.BASE(projectId),
+      API_PATHS.PROJECTS.LOGS(projectId).BASE,
       { params: { page, page_size: pageSize } });
   return response.data;
 };
