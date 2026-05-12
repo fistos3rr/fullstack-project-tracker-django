@@ -50,6 +50,12 @@ apiClient.interceptors.response.use(
         window.location.href = "/login";
         return Promise.reject(refreshError)
       }
+    } else if (error.response?.status === 403) {
+      // No priveleges
+    } else if (!error.response) {
+      // Network error
+    } else if (error.response.status >= 500) {
+      // Internal error
     }
 
     return Promise.reject(error);

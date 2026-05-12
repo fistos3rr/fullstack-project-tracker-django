@@ -7,6 +7,7 @@ import { Loading } from '../components/ui/Loading';
 
 const ProjectListPage = lazy(() => import('../components/Pages/ProjectListPage'));
 const ProjectPage = lazy(() => import('../components/Pages/ProjectPage'));
+const ProjectCreatePage = lazy(() => import('../components/Pages/ProjectCreatePage')) 
 
 
 const withSuspense = (Component: React.LazyExoticComponent<React.ComponentType<any>>) => (
@@ -23,6 +24,7 @@ export const router = createBrowserRouter([
       { path: "/", element: <Navigate to={ROUTES.HOME}/>},
       { path: ROUTES.PROJECTS, element: withSuspense(ProjectListPage) },
       { path: ROUTES.PROJECT_DETAIL(), element: withSuspense(ProjectPage)},
+      { path: ROUTES.PROJECT_CREATE, element: withSuspense(ProjectCreatePage)},
     ]
   }
 ])

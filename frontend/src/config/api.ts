@@ -2,6 +2,7 @@ export const API_PATHS = {
   PROJECTS: {
     BASE: '/projects',
     BY_ID: (id: number) => `/projects/${id}`,
+    POST: '/projects/',
   },
   COMMENTS: {
     BASE: (project_id: number) => `/projects/${project_id}/comments`,

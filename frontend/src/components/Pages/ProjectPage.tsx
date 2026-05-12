@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { ProjectDetails } from "../Projects/ProjectDetails";
 import { ProjectCommentList } from "../Comments/ProjectCommentList";
 import { ProjectLogList } from "../ProjectLogs/ProjectLogList";
+import { Button } from "../ui/Button";
 
 
 export const ProjectPage = () => {
@@ -18,8 +19,10 @@ export const ProjectPage = () => {
 
   return (
     <div className='project'>
+      <Button>Change project</Button>
       <ProjectDetails id={projectId} />
       <ProjectCommentList projectId={projectId} />
+      <Button>Send message</Button>
       <ProjectLogList projectId={projectId} />
     </div>
   );

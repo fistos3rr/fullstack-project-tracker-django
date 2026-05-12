@@ -22,7 +22,7 @@ export const fetchProject = async (id: number): Promise<Project> => {
 
 // POST
 export const createProject = async (projectData: ProjectCreate): Promise<Project> => {
-  const response = await apiClient.post<Project>(API_PATHS.PROJECTS.BASE, projectData);
+  const response = await apiClient.post<Project>(API_PATHS.PROJECTS.POST, projectData);
   return response.data;
 };
 
