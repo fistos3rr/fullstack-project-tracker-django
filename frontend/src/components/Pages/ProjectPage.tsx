@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { ProjectDetails } from "../Projects/ProjectDetails";
 import { ProjectCommentList } from "../Comments/ProjectCommentList";
-import { ProjectLogList } from "../Logs/ProjectLogList";
+import { ProjectLogList } from "../ProjectLogs/ProjectLogList";
 
 
 export const ProjectPage = () => {
