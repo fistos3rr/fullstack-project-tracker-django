@@ -35,7 +35,7 @@ export const createProjectComment = async (
   projectId: number, data: ProjectCommentCreate
 ): Promise<ProjectComment> => {
   const response = await apiClient
-    .post<ProjectComment>(API_PATHS.PROJECTS.COMMENTS(projectId).BASE, data);
+    .post<ProjectComment>(`${API_PATHS.PROJECTS.COMMENTS(projectId).BASE}/`, data);
   return response.data;
 };
 

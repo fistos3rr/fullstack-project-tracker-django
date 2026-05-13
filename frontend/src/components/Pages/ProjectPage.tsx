@@ -3,6 +3,7 @@ import { ProjectDetails } from "../Projects/ProjectDetails";
 import { ProjectCommentList } from "../Comments/ProjectCommentList";
 import { ProjectLogList } from "../ProjectLogs/ProjectLogList";
 import { Button } from "../ui/Button";
+import { ProjectCommentForm } from "../Comments/ProjectCommentForm";
 
 
 export const ProjectPage = () => {
@@ -21,8 +22,8 @@ export const ProjectPage = () => {
     <div className='project'>
       <Button>Change project</Button>
       <ProjectDetails id={projectId} />
+      <ProjectCommentForm projectId={projectId} />
       <ProjectCommentList projectId={projectId} />
-      <Button>Send message</Button>
       <ProjectLogList projectId={projectId} />
     </div>
   );
