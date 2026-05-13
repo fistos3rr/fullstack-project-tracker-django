@@ -2,15 +2,16 @@ import { useForm } from "react-hook-form"
 import { ProjectCommentCreate } from "../../api/models/projectComment"
 import { createProjectComment, fetchProjectCommentPage } from "../../api/core/project-comments";
 import { Button } from "../ui/Button";
-import { useState } from "react";
 
 
 export interface ProjectCommentFormProps {
   projectId: number;
+  disabled?: boolean;
 }
 
 export const ProjectCommentForm = ({
-  projectId
+  projectId,
+  disabled = false,
 }: ProjectCommentFormProps) => {
   const {
     register,
@@ -21,15 +22,9 @@ export const ProjectCommentForm = ({
       content: '',
     },
   });
-  const [disabled, setDisabled] = useState<boolean>(false);
-
   const onSubmit = async (data: ProjectCommentCreate) => {
     await createProjectComment(projectId, data);
   }     
-
-  if (!localStorage.getItem("access_token")) {
-    setDisabled(true);
-  } 
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>

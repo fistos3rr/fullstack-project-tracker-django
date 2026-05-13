@@ -29,7 +29,7 @@ export const createProject = async (projectData: ProjectCreate): Promise<Project
 
 // PATCH
 export const patchProject = async (id: number, updates: ProjectUpdate): Promise<Project> => {
-  const response = await apiClient.patch<Project>(API_PATHS.PROJECTS.BY_ID(id), updates);
+  const response = await apiClient.patch<Project>(`${API_PATHS.PROJECTS.BY_ID(id)}/`, updates);
   return response.data;
 };
 

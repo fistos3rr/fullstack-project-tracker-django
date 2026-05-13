@@ -2,8 +2,8 @@ import { useParams } from "react-router-dom";
 import { ProjectDetails } from "../Projects/ProjectDetails";
 import { ProjectCommentList } from "../Comments/ProjectCommentList";
 import { ProjectLogList } from "../ProjectLogs/ProjectLogList";
-import { Button } from "../ui/Button";
 import { ProjectCommentForm } from "../Comments/ProjectCommentForm";
+import { ProjectForm } from "../Projects/ProjectForm";
 
 
 export const ProjectPage = () => {
@@ -18,11 +18,13 @@ export const ProjectPage = () => {
     return <div>Invalid project ID</div>;
   }
 
+  const disabled = !localStorage.getItem("access_token"); 
+
   return (
     <div className='project'>
-      <Button>Change project</Button>
+      <ProjectForm updateId={projectId} disabled={disabled}/>
       <ProjectDetails id={projectId} />
-      <ProjectCommentForm projectId={projectId} />
+      <ProjectCommentForm projectId={projectId} disabled={disabled}/>
       <ProjectCommentList projectId={projectId} />
       <ProjectLogList projectId={projectId} />
     </div>

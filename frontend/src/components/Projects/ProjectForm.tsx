@@ -1,16 +1,28 @@
 import { useForm } from "react-hook-form"
-import { ProjectCreate } from "../../api/models/project"
+import { ProjectCreate, ProjectUpdate } from "../../api/models/project"
 import { ProjectStatus, ProjectStatusOptions } from "../../api/models/projectStatus"
 import { createProject } from "../../api/core/projects";
 import { Button } from "../ui/Button";
 import { ROUTES } from "../../config/routes";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { fetchProject } from "../../api/core/projects";
+import { patchProject } from "../../api/core/projects";
 
 
-export const ProjectForm = () => {
+export interface ProjectFromProps {
+  updateId?: number;
+  disabled?: boolean;
+}
+
+export const ProjectForm = ({
+  updateId = undefined,
+  disabled = false,
+}: ProjectFromProps) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ProjectCreate>({
     defaultValues: {
@@ -21,13 +33,31 @@ export const ProjectForm = () => {
   });
   const navigate = useNavigate();
 
-  const onSubmit = async (data: ProjectCreate) => {
-    const response = await createProject(data)
-      .then()
-      .catch(error => console.log(error));
+  if (updateId) {
+    useEffect(() => {
+      async () => {
+        const response = await fetchProject(updateId)
+          .then()
+          .catch(error => console.error(error));
 
-    if (response) navigate(ROUTES.PROJECT_DETAIL(response.id))
-  };
+        if (response) reset(response);
+      }
+    }, [updateId]);
+  }
+
+  const onSubmit = !updateId ? 
+    async (data: ProjectCreate) => {
+      const response = await createProject(data)
+        .then()
+        .catch(); 
+      if (response) navigate(ROUTES.PROJECT_DETAIL(response.id))
+    }
+  :
+    async (data: ProjectUpdate) => {
+      await patchProject(updateId, data)
+        .then()
+        .catch();
+    };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -71,7 +101,9 @@ export const ProjectForm = () => {
           <p style={{ color: 'red', marginTop: 4 }}>{errors.status.message}</p>
         )}
       </div>
-      <Button onClick={handleSubmit(onSubmit)}>Create project</Button>
+      <Button disabled={disabled} onClick={handleSubmit(onSubmit)}>
+        {!updateId ? "Create project" : "Update project"}
+      </Button>
     </form>
   );
 };
