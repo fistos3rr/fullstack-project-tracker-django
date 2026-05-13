@@ -37,15 +37,17 @@ export const ProjectForm = ({
 
   if (updateId) {
     useEffect(() => {
-      async () => {
-        const response = await fetchProject(updateId)
-          .then()
-          .catch(error => {
-            console.error(error);
-            setFetchError(error);
-          });
-        if (response) reset(response);
-      }
+      fetchProject(updateId)
+        .then(response => {
+          if (response) {
+            console.log(response);
+            reset(response);
+          }
+        })
+        .catch(error => {
+          console.error(error);
+          setFetchError(error);
+        });
     }, [updateId]);
   }
 

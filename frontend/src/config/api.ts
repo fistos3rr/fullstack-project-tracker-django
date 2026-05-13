@@ -1,7 +1,7 @@
 export const API_PATHS = {
   PROJECTS: {
     BASE: '/projects/',
-    get BY_ID() { return ((id: number) => `${this.BASE}${id}`) },
+    get BY_ID() { return ((id: number) => `${this.BASE}${id}/`) },
 
     get COMMENTS() {
       return (project_id: number) => {
