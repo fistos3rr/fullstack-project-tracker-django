@@ -23,5 +23,18 @@ export const API_PATHS = {
         }
       }
     }
-  }
+  },
+
+  AUTH: {
+    BASE: '/auth',
+    get TOKEN() { return "/token/"},
+    get TOKEN_REFRESH() { return `${this.TOKEN}refresh/`},
+    get LOGIN() { return `${this.BASE}/login/` },
+    get LOGOUT() { return `${this.BASE}/logout/` },
+  },
+
+  USERS: {
+    BASE: '/users',
+    get ME() { return `${this.BASE}/me` },
+  },
 }

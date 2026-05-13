@@ -1,5 +1,6 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 import { BACKEND_URL, API_BASE_URL } from "../config/env";
+import { API_PATHS } from "../config/api";
 
 
 const apiClient = axios.create({
@@ -16,10 +17,11 @@ apiClient.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+    
     return config;
   },
   (error: AxiosError) => Promise.reject(error)
-)
+);
 
 apiClient.interceptors.response.use(
   (response) => response,
@@ -35,7 +37,7 @@ apiClient.interceptors.response.use(
         if (!refreshToken) throw new Error("Refresh token not found!");
 
         const response = await 
-          axios.post("/auth/refresh", { refreshToken });
+          axios.post(API_PATHS.AUTH.TOKEN_REFRESH, { refreshToken });
         const { access_token, refresh_token } = response.data;
 
         localStorage.setItem("access_token", access_token);

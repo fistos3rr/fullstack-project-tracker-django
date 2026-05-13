@@ -8,6 +8,7 @@ import { Loading } from '../components/ui/Loading';
 const ProjectListPage = lazy(() => import('../components/Pages/ProjectListPage'));
 const ProjectPage = lazy(() => import('../components/Pages/ProjectPage'));
 const ProjectCreatePage = lazy(() => import('../components/Pages/ProjectCreatePage')) 
+const LoginPage = lazy(() => import('../components/Pages/LoginPage'))
 
 
 const withSuspense = (Component: React.LazyExoticComponent<React.ComponentType<any>>) => (
@@ -17,10 +18,11 @@ const withSuspense = (Component: React.LazyExoticComponent<React.ComponentType<a
 )
 
 const protectedLoader = () => {
-  const token = localStorage.getItem('access_token');
+  const token = localStorage.getItem("access_token");
   if (!token) {
-    return redirect(ROUTES.LOGIN);
+    throw redirect("/login");
   }
+
   return null;
 };
 
@@ -36,6 +38,7 @@ export const router = createBrowserRouter([
         element: withSuspense(ProjectCreatePage),
         loader: protectedLoader,
       },
+      { path: ROUTES.LOGIN, element: withSuspense(LoginPage) },
     ]
   }
 ])
