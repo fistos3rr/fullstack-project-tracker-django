@@ -5,9 +5,9 @@ import { API_PATHS } from "../../config/api";
 
 
 // GET list with pagination
-export const fetchProjectPage = async (page = 1, pageSize = 10): Promise<PaginatedResponse<Project>> => {
+export const fetchProjectPage = async (page = 1): Promise<PaginatedResponse<Project>> => {
   const response = await apiClient.get<PaginatedResponse<Project>>(API_PATHS.PROJECTS.BASE, {
-    params: { page, page_size: pageSize },
+    params: { page },
   });
   return response.data;
 };
@@ -22,14 +22,14 @@ export const fetchProject = async (id: number): Promise<Project> => {
 
 // POST
 export const createProject = async (projectData: ProjectCreate): Promise<Project> => {
-  const response = await apiClient.post<Project>(API_PATHS.PROJECTS.POST, projectData);
+  const response = await apiClient.post<Project>(API_PATHS.PROJECTS.BASE, projectData);
   return response.data;
 };
 
 
 // PATCH
 export const patchProject = async (id: number, updates: ProjectUpdate): Promise<Project> => {
-  const response = await apiClient.patch<Project>(`${API_PATHS.PROJECTS.BY_ID(id)}/`, updates);
+  const response = await apiClient.patch<Project>(API_PATHS.PROJECTS.BY_ID(id), updates);
   return response.data;
 };
 

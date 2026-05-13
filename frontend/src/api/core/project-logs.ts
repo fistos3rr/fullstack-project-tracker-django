@@ -8,11 +8,10 @@ import { API_PATHS } from "../../config/api";
 export const fetchProjectLogPage = async (
   projectId: number,
   page = 1,
-  pageSize = 10
 ): Promise<PaginatedResponse<ProjectLog>> => {
   const response = await
     apiClient.get<PaginatedResponse<ProjectLog>>(
       API_PATHS.PROJECTS.LOGS(projectId).BASE,
-      { params: { page, page_size: pageSize } });
+      { params: { page } });
   return response.data;
 };

@@ -7,13 +7,12 @@ import { API_PATHS } from "../../config/api";
 // GET list pagination
 export const fetchProjectCommentPage = async (
   projectId: number,
-  page = 1,
-  pageSize = 10
+  page = 1
 ): Promise<PaginatedResponse<ProjectComment>> => {
   const response = 
     await apiClient
       .get<PaginatedResponse<ProjectComment>>(API_PATHS.PROJECTS.COMMENTS(projectId).BASE, {
-    params: { page, page_size: pageSize },
+    params: { page },
   });
   return response.data;
 };
@@ -35,7 +34,7 @@ export const createProjectComment = async (
   projectId: number, data: ProjectCommentCreate
 ): Promise<ProjectComment> => {
   const response = await apiClient
-    .post<ProjectComment>(`${API_PATHS.PROJECTS.COMMENTS(projectId).BASE}/`, data);
+    .post<ProjectComment>(API_PATHS.PROJECTS.COMMENTS(projectId).BASE, data);
   return response.data;
 };
 

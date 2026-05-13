@@ -34,26 +34,24 @@ export const ProjectDetails = ({
 }: ProjectDetailsProps) => {
   const [project, setProject] = useState<Project>(); 
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     setLoading(true);
     fetchProject(id)
       .then(response => setProject(response ?? null))
-      .catch(setError)
+      .catch(error => {
+        console.error(error);
+      })
       .finally(() => setLoading(false));
   }, [id]); 
 
   if (loading) return <Loading />;
 
-  if (!project) return <h1>no project</h1>;
+  if (!project) return <h1>Project details not found</h1>;
 
   const status = statusConfig[project?.status];
   const created_at = getDateTime(project?.created_at);
   const updated_at = getDateTime(project?.updated_at);
-
-  if (error) return <div>Error: {error}</div>;
-
 
   return (
     <>

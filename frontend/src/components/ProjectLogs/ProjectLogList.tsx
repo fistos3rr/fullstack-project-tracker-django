@@ -7,34 +7,35 @@ import { getDateTime } from "../../utils";
 interface ProjectLogListProps {
   projectId: number,
   page?: number,
-  pageNumber?: number,
 } 
 
 export const ProjectLogList = ({
   projectId,
   page = 1,
-  pageNumber = 10,
 }: ProjectLogListProps) => {
   
 
   const [logs, setLogs] = useState<ProjectLog[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [fetchError, setFetchError] = useState(null);
 
   useEffect(() => {
     setLoading(true);
-    fetchProjectLogPage(projectId, page, pageNumber)
+    fetchProjectLogPage(projectId, page)
       .then(response => setLogs(response.results))
-      .catch(setError)
+      .catch(error => {
+        console.error(error);
+        setFetchError(error);
+      })
       .finally(() => setLoading(false));
-  }, [projectId]);
+  }, [projectId, page]);
 
   if (loading) {
     return <Loading />;
   };
 
-  if (error) {
-    return <div>Error: {error}</div>;
+  if (fetchError) {
+    return <p style={{ color: 'red' }}>Error while fetching logs</p>;
   };
 
   if (logs.length === 0) {

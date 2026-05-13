@@ -11,6 +11,7 @@ const apiClient = axios.create({
   },
 })
 
+
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem("access_token");
@@ -22,6 +23,7 @@ apiClient.interceptors.request.use(
   },
   (error: AxiosError) => Promise.reject(error)
 );
+
 
 apiClient.interceptors.response.use(
   (response) => response,
@@ -57,7 +59,7 @@ apiClient.interceptors.response.use(
     } else if (!error.response) {
       // Network error
     } else if (error.response.status >= 500) {
-      // Internal error
+      console.error(error);
     }
 
     return Promise.reject(error);

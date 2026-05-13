@@ -8,23 +8,24 @@ import { fetchProjectCommentPage } from "../../api/core/project-comments";
 interface ProjectCommentListProps {
   projectId: number,
   page?: number,
-  pageNumber?: number,
 }
 
 export const ProjectCommentList = ({
   projectId,
   page = 1,
-  pageNumber = 10
 }: ProjectCommentListProps) => {
   const [comments, setComments] = useState<ProjectComment[]>([]) 
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [fetchError, setFetchError] = useState(null);
 
   useEffect(() => {
     setLoading(true);
-    fetchProjectCommentPage(projectId, page, pageNumber)
+    fetchProjectCommentPage(projectId, page)
       .then(response => setComments(response.results))
-      .catch(setError)
+      .catch(error => { 
+        console.error(error);
+        setFetchError(error);
+      })
       .finally(() => setLoading(false));
   }, [projectId]);
 
@@ -32,9 +33,9 @@ export const ProjectCommentList = ({
     return <Loading />;
   };
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  if (fetchError) {
+    return <p style={{ color: 'red' }}>Something went wrong while fetching comments.</p>;
+  };
 
   if (comments.length === 0) {
     return (
