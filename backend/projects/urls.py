@@ -14,5 +14,5 @@ comments_router.register('comments', views.ProjectCommentViewSet, basename='proj
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("", include(comments_router.urls))
+    path("", include(comments_router.urls)),
 ]

@@ -1,9 +1,10 @@
+from rest_framework.generics import RetrieveUpdateAPIView
 from backend.projects.models import Project
 from backend.projects.serializers import ProjectSerializer 
 from rest_framework import permissions
 from backend.projects.permissions import IsOwnerOrReadOnly
 from rest_framework import viewsets, mixins
-from rest_framework.decorators import action
+from rest_framework.decorators import action, permission_classes
 from rest_framework.response import Response
 from backend.projects.models import ProjectLog, ProjectComment
 from backend.projects.serializers import ProjectLogSerializer, ProjectCommentSerializer
@@ -75,3 +76,14 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
         if self.action == 'retrieve':
             return UserDetailSerializer
         return UserDetailSerializer
+
+    @action(
+        detail=False, 
+        methods=["get"], 
+        url_path="me", 
+        url_name="me",
+        permission_classes=[permissions.IsAuthenticated]
+    )
+    def me(self, request, pk=None):
+        user = request.user
+        return Response(UserDetailSerializer(user).data)
