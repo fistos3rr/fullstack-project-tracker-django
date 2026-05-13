@@ -1,8 +1,10 @@
-import { SubmitHandler, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { ProjectCreate } from "../../api/models/project"
 import { ProjectStatus, ProjectStatusOptions } from "../../api/models/projectStatus"
 import { createProject } from "../../api/core/projects";
 import { Button } from "../ui/Button";
+import { ROUTES } from "../../config/routes";
+import { useNavigate } from "react-router-dom";
 
 
 export const ProjectForm = () => {
@@ -17,12 +19,14 @@ export const ProjectForm = () => {
       status: ProjectStatus.PLANNED,
     },
   });
+  const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<ProjectCreate> = (data) => {
-    createProject(data)
+  const onSubmit = async (data: ProjectCreate) => {
+    const response = await createProject(data)
       .then()
-      .catch(error => console.log(error))
-      .finally();
+      .catch(error => console.log(error));
+
+    if (response) navigate(ROUTES.PROJECT_DETAIL(response.id))
   };
 
   return (
